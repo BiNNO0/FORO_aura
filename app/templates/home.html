@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<h2>Subforos</h2>
+<div class="subforums">
+    {% for subforum in subforums %}
+    <div class="subforum">
+        <h3><a href="{{ url_for('forum', subforum_id=subforum.id) }}" class="btn">{{ subforum.name }}</a></h3>
+        <p>{{ subforum.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
+

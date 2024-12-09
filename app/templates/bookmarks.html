@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Marcadores{% endblock %}
+
+{% block content %}
+<h2>Mis Marcadores</h2>
+
+<p>Verifica y accede a los marcadores que has guardado:</p>
+
+<ul>
+    {% for bookmark in bookmarks %}
+        <li>
+            <a href="{{ url_for('reading') }}?page_number={{ bookmark.page_number }}">
+                {{ bookmark.bookmark_name }} (Página {{ bookmark.page_number }})
+            </a>
+        </li>
+    {% else %}
+        <li>No tienes marcadores guardados.</li>
+    {% endfor %}
+</ul>
+
+
+
+<a href="{{ url_for('reading') }}" class="btn"><button>Volver a la lectura</button></a>
+
+{% endblock %}

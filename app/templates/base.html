@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flask App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        
+
+        {% if session.get('user_id') %}
+            <!-- Solo se muestra este bloque si el usuario está autenticado -->
+            <div class="navbar">
+                <div class="navbar-content">
+                    <p><strong>Nombre de usuario:</strong> {{ user_info.username }}</p>
+                    <p><strong>ID de usuario:</strong> {{ user_info.user_id }}</p>
+                    <a href="{{ url_for('home') }}" class="btn">Foro</a>
+                    <a href="{{ url_for('reading') }}" class="btn">Lectura</a>
+                    <a href="{{ url_for('bookmarks') }}" class="btn">Marcadores</a>
+                    <a href="{{ url_for('logout') }}" class="btn danger">Cerrar sesión</a>
+                </div>
+            </div>
+            
+            
+           
+           
+        {% else %}
+            <div class="login-page">
+        
+                <a href="{{ url_for('login') }}" class="btn">Iniciar sesión</a>
+                <a href="{{ url_for('register') }}" class="btn">Registrar</a>
+ 
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

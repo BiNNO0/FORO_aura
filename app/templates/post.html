@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Publicación{% endblock %}
+
+{% block content %}
+<h2><p>Por: {{ post.user.username }}</p></h2>
+<h3>{{ post.title }}</h3>
+<p>{{ post.content }}</p>
+<hr>
+<h3>Respuestas:</h3>
+{% for reply in post.replies %}
+    <div class="reply">
+        <p><h4>Por: {{ reply.user.username }}</h4></p>
+        <p>{{ reply.content }}</p>
+    </div>
+    <hr>
+{% endfor %}
+
+<!-- Formulario para responder a la publicación o crear una nueva publicación -->
+<form method="POST" action="{{ url_for('create_post', subforum_id=subforum_id) }}">
+    <label for="title">Título:</label>
+    <input type="text" name="title" id="title" required>
+    
+    <label for="content">Contenido:</label>
+    <textarea name="content" id="content" rows="3" required></textarea>
+    
+    <button type="submit">Crear publicación</button>
+</form>
+{% endblock %}

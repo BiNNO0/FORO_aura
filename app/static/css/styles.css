@@ -1,0 +1,173 @@
+/* Importa una fuente redonda desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif; /* Fuente moderna y redondeada */
+    background-color: #d7ccc8; /* Beige para el fondo */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #ffffff; /* Blanco para los contenedores */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Barra de navegación */
+.navbar {
+    background-color: #5d4037; /* Café oscuro */
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.navbar-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #ffffff; /* Texto blanco */
+}
+
+.navbar-content .btn {
+    text-decoration: none;
+    color: white;
+    background-color: #2b7a0b; /* Verde oscuro */
+    padding: 8px 12px;
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-content .btn:hover {
+    background-color: #1f5b08; /* Verde más oscuro */
+}
+
+.navbar-content .btn.danger {
+    background-color: #b71c1c; /* Rojo oscuro para el botón peligroso */
+}
+
+.navbar-content .btn.danger:hover {
+    background-color: #7f0000; /* Rojo más intenso */
+}
+
+/* Información del usuario */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: #333; /* Texto oscuro */
+    background-color: #8bc34a; /* Verde claro */
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.user-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #ffffff; /* Texto blanco */
+}
+
+/* Formularios y campos */
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+form input:focus, form textarea:focus {
+    outline: none;
+    border-color: #2b7a0b; /* Verde al enfocar */
+    box-shadow: 0 0 5px rgba(43, 122, 11, 0.5);
+}
+
+button, input[type="submit"] {
+    background-color: #2b7a0b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #1f5b08; /* Verde más oscuro */
+}
+
+/* Subforos */
+.subforums {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.subforum {
+    background-color: #a87465; /* Café oscuro */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.subforum h3 a {
+    color: #8ac745; /* Verde claro */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.subforum h3 a:hover {
+    text-decoration: underline;
+}
+
+/* Títulos */
+h2 {
+    color: #2b7a0b; /* Verde oscuro */
+    margin-bottom: 20px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Contenedor principal de la página */
+.login-page {
+    display: flex; /* Activa Flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 10vh; /* Ocupa toda la altura de la ventana */
+    background-color: #d7ccc8; /* Fondo tipo bosque */
+    margin: 0; /* Elimina márgenes por defecto */
+}
+
+/* Botones de inicio y registro */
+.login-page .btn {
+    padding: 10px 20px;
+    background-color: #29700d; /* Verde inspirado en la selva */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    margin: 0 10px; /* Espacio horizontal entre botones */
+    text-decoration: none; /* Elimina subrayado */
+    font-family: 'Arial', sans-serif; /* Fuente moderna y redondeada */
+    transition: background-color 0.3s ease;
+}
+
+.login-page .btn:hover {
+    background-color: #29700d; /* Verde más oscuro al pasar el mouse */
+}

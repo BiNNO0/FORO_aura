@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Lectura{% endblock %}
+
+{% block content %}
+<h2>Lectura: Aura</h2>
+<p>Explora la lectura de "AURA".
+    <br>Utiliza los botones para navegar entre páginas y marca tus favoritas con un nombre 
+    personalizado para volver a ellas rápidamente.</p>
+<div class="text-right">
+    <a href="{{ url_for('static', filename='pdf/aura.pdf') }}" class="btn" target="_blank"><button>Descargar PDF</button></a>
+</div>
+
+<form method="POST" action="{{ url_for('add_bookmark') }}">
+    <input type="hidden" name="page_number" id="page_number"> <!-- Página actual -->
+
+    <div class="form-group">
+        <label for="bookmark_name" class="short-label">Nombre del marcador:</label>
+        <input type="text" name="bookmark_name" id="bookmark_name" required>
+    </div>
+
+    <div class="text-right">
+        <button type="submit">Guardar marcador</button>
+    </div>
+</form>
+
+<div id="pdf-viewer" style="text-align: center;">
+    <canvas id="pdf-canvas" style="border: 1px solid black;"></canvas>
+    <div style="margin-top: 10px;">
+        <button id="prev-page" class="btn">Página Anterior</button>
+        <span>Página: <span id="page-num"></span> de <span id="page-count"></span></span>
+        <button id="next-page" class="btn">Página Siguiente</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script>
+    const url = "{{ url_for('static', filename='pdf/aura.pdf') }}";
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+    let pdfDoc = null;
+    let pageNum = 1;  // Número de página inicial
+    let pageRendering = false;
+    let pageNumPending = null;
+    const scale = 1.25;
+    const canvas = document.getElementById('pdf-canvas');
+    const ctx = canvas.getContext('2d');
+    const pageNumberInput = document.getElementById('page_number');
+
+    // Establece el número de página cuando se cambia
+    function updatePageNumberInput() {
+        pageNumberInput.value = pageNum;
+    }
+
+    // Renderizar una página
+    function renderPage(num) {
+        pageRendering = true;
+        pdfDoc.getPage(num).then(page => {
+            const viewport = page.getViewport({ scale: scale });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport,
+            };
+            const renderTask = page.render(renderContext);
+
+            renderTask.promise.then(() => {
+                pageRendering = false;
+                if (pageNumPending !== null) {
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
+            });
+        });
+
+        document.getElementById('page-num').textContent = num;
+    }
+
+    // Cambiar página
+    function queueRenderPage(num) {
+        if (pageRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
+        }
+    }
+
+    // Ir a la página anterior
+    document.getElementById('prev-page').addEventListener('click', () => {
+        if (pageNum <= 1) {
+            return;
+        }
+        pageNum--;
+        queueRenderPage(pageNum);
+        updatePageNumberInput();  // Actualizar número de página
+    });
+
+    // Ir a la siguiente página
+    document.getElementById('next-page').addEventListener('click', () => {
+        if (pageNum >= pdfDoc.numPages) {
+            return;
+        }
+        pageNum++;
+        queueRenderPage(pageNum);
+        updatePageNumberInput();  // Actualizar número de página
+    });
+
+    // Cargar el documento PDF
+    pdfjsLib.getDocument(url).promise.then(pdf => {
+        pdfDoc = pdf;
+        document.getElementById('page-count').textContent = pdf.numPages;
+
+        // Leer el número de página desde la URL (si está presente)
+        const urlParams = new URLSearchParams(window.location.search);
+        const savedPageNum = urlParams.get('page_number');
+        if (savedPageNum) {
+            pageNum = parseInt(savedPageNum, 10);
+        }
+
+        renderPage(pageNum);
+    });
+
+    // Asegurar que la página cargada sea la correcta
+    updatePageNumberInput();
+</script>
+{% endblock %}
